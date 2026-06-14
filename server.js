@@ -16,7 +16,7 @@ app.use(compression());
 app.use(express.static('public'));
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 const SYSTEM_PROMPT = `You are DentalAI, a real-time AI assistant for dental laboratories. You communicate directly with dentists and dental technicians.
 
