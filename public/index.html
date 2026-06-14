@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d9488">
+    <title>DentalAI Bridge - Smart Lab Communication</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --teal-50: #f0fdfa;
+            --teal-100: #ccfbf1;
+            --teal-200: #99f6e4;
+            --teal-500: #14b8a6;
+            --teal-600: #0d9488;
+            --teal-700: #0f766e;
+            --teal-800: #115e59;
+            --blue-50: #eff6ff;
+            --blue-100: #dbeafe;
+            --blue-500: #3b82f6;
+            --blue-600: #2563eb;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --white: #ffffff;
+            --red-500: #ef4444;
+            --red-100: #fee2e2;
+            --green-500: #22c55e;
+            --green-100: #dcfce7;
+            --orange-500: #f59e0b;
+            --orange-100: #fef3c7;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f0fdfa 0%, #e2e8f0 100%);
+            color: var(--gray-800);
+            height: 100vh;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #app { height: 100vh; }
+
+        /* ============ CONNECTION SCREEN ============ */
+        #connection-screen {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+        }
+
+        .connection-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 48px;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: var(--shadow-xl);
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--teal-500), var(--teal-600));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: white;
+            font-size: 2em;
+            box-shadow: 0 8px 24px rgba(13, 148, 136, 0.3);
+        }
+
+        .connection-card h1 {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .tagline {
+            color: var(--gray-500);
+            font-size: 0.95em;
+        }
+
+        .connection-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.9em;
+            color: var(--gray-700);
+        }
+
+        .role-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .role-btn {
+            padding: 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            background: var(--white);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-align: center;
+        }
+
+        .role-btn:hover {
+            border-color: var(--teal-500);
+            background: var(--teal-50);
+        }
+
+        .role-btn.active {
+            border-color: var(--teal-600);
+            background: var(--teal-50);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+        }
+
+        .role-btn i {
+            font-size: 1.5em;
+            color: var(--gray-600);
+        }
+
+        .role-btn.active i { color: var(--teal-600); }
+        .role-btn span { font-weight: 600; font-size: 0.9em; }
+        .role-btn small { font-size: 0.75em; color: var(--gray-500); }
+
+        .form-group input {
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.95em;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--teal-500);
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+        }
+
+        .form-group small {
+            font-size: 0.8em;
+            color: var(--gray-500);
+        }
+
+        .connect-btn {
+            padding: 16px;
+            background: linear-gradient(135deg, var(--teal-600), var(--teal-700));
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(13, 148, 136, 0.3);
+        }
+
+        .features-list {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8em;
+            color: var(--gray-500);
+        }
+
+        .feature-item i { color: var(--teal-500); }
+
+        /* ============ CHAT SCREEN ============ */
+        #chat-screen { height: 100vh; }
+
+        .chat-container {
+            display: grid;
+            grid-template-columns: 260px 1fr 380px;
+            height: 100vh;
+            background: var(--white);
+        }
+
+        .hidden { display: none !important; }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--gray-900);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--gray-800);
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--gray-800);
+        }
+
+        .logo-small {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: var(--teal-400);
+        }
+
+        .logo-small i { font-size: 1.2em; }
+
+        .new-case-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--teal-600);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .new-case-btn:hover {
+            background: var(--teal-500);
+            transform: scale(1.1);
+        }
+
+        .sidebar-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .section-label {
+            font-size: 0.7em;
+            font-weight: 700;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 8px;
+        }
+
+        .current-case-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gray-800);
+            padding: 12px;
+            border-radius: var(--radius-sm);
+        }
+
+        .case-id-badge {
+            font-family: 'SF Mono', 'Consolas', monospace;
+            font-size: 0.85em;
+            color: var(--teal-400);
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--gray-400);
+            cursor: pointer;
+            padding: 4px;
+            transition: var(--transition);
+        }
+
+        .icon-btn:hover { color: white; }
+
+        .online-users {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85em;
+            color: var(--gray-300);
+        }
+
+        .user-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .user-dot.online {
+            background: var(--green-500);
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 10px;
+            background: var(--gray-800);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: var(--gray-300);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+        }
+
+        .action-btn:hover {
+            background: var(--gray-700);
+            color: white;
+        }
+
+        .ai-status {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            background: var(--gray-800);
+            border-radius: var(--radius-sm);
+            font-size: 0.85em;
+            color: var(--green-400);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green-500);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main Chat */
+        .chat-main {
+            display: flex;
+            flex-direction: column;
+            background: var(--gray-50);
+        }
+
+        .chat-header {
+            padding: 20px 24px;
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-info h2 {
+            font-size: 1.2em;
+            color: var(--gray-900);
+        }
+
+        .header-info p {
+            font-size: 0.85em;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+            color: var(--gray-500);
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 3px;
+        }
+
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            background: var(--gray-400);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { opacity: 0.3; }
+            30% { opacity: 1; }
+        }
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Messages */
+        .message {
+            max-width: 85%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dentist-message { align-self: flex-end; }
+        .technician-message { align-self: flex-start; }
+
+        .message-content {
+            padding: 14px 18px;
+            border-radius: var(--radius-lg);
+            position: relative;
+        }
+
+        .dentist-message .message-content {
+            background: linear-gradient(135deg, var(--teal-600), var(--teal-700));
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .technician-message .message-content {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-bottom-left-radius: 4px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .message-sender {
+            font-weight: 600;
+            font-size: 0.8em;
+            margin-bottom: 4px;
+            opacity: 0.8;
+        }
+
+        .message-text {
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .message-time {
+            font-size: 0.7em;
+            opacity: 0.6;
+            margin-top: 6px;
+            text-align: right;
+        }
+
+        /* AI Message */
+        .ai-message { align-self: flex-start; max-width: 90%; }
+
+        .ai-message .message-content {
+            background: linear-gradient(135deg, #eff6ff, #f0fdfa);
+            border: 2px solid var(--teal-200);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            color: var(--teal-700);
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .ai-header i { font-size: 1.2em; }
+
+        .ai-content {
+            font-family: inherit;
+            line-height: 1.7;
+            color: var(--gray-800);
+        }
+
+        .quick-summary {
+            background: var(--teal-100);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            color: var(--teal-800);
+            font-weight: 500;
+            margin-top: 12px;
+            display: inline-block;
+        }
+
+        /* Suggested Responses */
+        .suggested-responses {
+            margin-top: 12px;
+            padding: 12px;
+            background: var(--blue-50);
+            border-radius: var(--radius-sm);
+        }
+
+        .suggestions-header {
+            font-weight: 600;
+            font-size: 0.85em;
+            color: var(--blue-600);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .suggestions-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .suggestion-btn {
+            padding: 8px 14px;
+            background: white;
+            border: 1px solid var(--blue-500);
+            border-radius: 20px;
+            color: var(--blue-600);
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: var(--transition);
+        }
+
+        .suggestion-btn:hover {
+            background: var(--blue-500);
+            color: white;
+        }
+
+        /* Urgent */
+        .ai-message.urgent .message-content {
+            border-color: var(--orange-500);
+            background: linear-gradient(135deg, #fef3c7, #fff7ed);
+        }
+
+        .badge {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .badge-blue { background: var(--blue-100); color: var(--blue-600); }
+        .badge-red { background: var(--red-100); color: var(--red-500); }
+
+        /* System Message */
+        .system-message { align-self: center; max-width: 600px; }
+
+        .system-message .message-content {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .system-icon {
+            font-size: 2em;
+            margin-bottom: 12px;
+            color: var(--teal-500);
+        }
+
+        .quick-start {
+            margin-top: 16px;
+            text-align: left;
+            background: var(--gray-50);
+            padding: 16px;
+            border-radius: var(--radius-sm);
+        }
+
+        .quick-start code {
+            display: block;
+            background: var(--teal-50);
+            padding: 10px;
+            border-radius: 6px;
+            margin: 8px 0;
+            font-family: 'SF Mono', monospace;
+            font-size: 0.85em;
+            color: var(--teal-800);
+            border: 1px solid var(--teal-200);
+        }
+
+        .status-change {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-icon {
+            font-size: 1.5em;
+            color: var(--teal-500);
+        }
+
+        /* Input Container */
+        .input-container {
+            padding: 20px 24px;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .ai-processing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: var(--teal-50);
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+            color: var(--teal-700);
+            font-size: 0.9em;
+        }
+
+        .processing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--teal-500);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .input-box {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        #messageInput {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            font-family: inherit;
+            font-size: 0.95em;
+            resize: none;
+            min-height: 52px;
+            max-height: 120px;
+            transition: var(--transition);
+            line-height: 1.5;
+        }
+
+        #messageInput:focus {
+            outline: none;
+            border-color: var(--teal-500);
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+        }
+
+        .send-btn {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, var(--teal-600), var(--teal-700));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            flex-shrink: 0;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.4);
+        }
+
+        .send-btn:active { transform: scale(0.95); }
+
+        .input-hints {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.75em;
+            color: var(--gray-400);
+        }
+
+        /* Technician Actions */
+        .technician-actions {
+            padding: 12px 24px;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .action-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .action-label {
+            font-size: 0.8em;
+            font-weight: 600;
+            color: var(--gray-500);
+            margin-right: 4px;
+        }
+
+        .quick-action-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--gray-300);
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .quick-action-btn:hover {
+            background: var(--teal-50);
+            border-color: var(--teal-500);
+        }
+
+        .status-update-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        #caseStatusSelect {
+            padding: 6px 12px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            font-size: 0.85em;
+            cursor: pointer;
+        }
+
+        /* AI Panel */
+        .ai-panel {
+            background: white;
+            border-left: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .panel-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray-800);
+            font-size: 1em;
+        }
+
+        .panel-header i { color: var(--teal-500); }
+
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .ai-placeholder {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray-400);
+        }
+
+        .ai-placeholder i {
+            font-size: 3em;
+            margin-bottom: 12px;
+            color: var(--gray-300);
+        }
+
+        .ai-analysis-card {
+            background: var(--teal-50);
+            border: 1px solid var(--teal-200);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .ai-analysis-card .card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            color: var(--teal-800);
+            font-weight: 700;
+        }
+
+        .ai-analysis-content {
+            font-size: 0.85em;
+            line-height: 1.7;
+            color: var(--gray-700);
+        }
+
+        /* Toast Notifications */
+        #toastContainer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: white;
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 320px;
+            max-width: 420px;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid var(--teal-500);
+        }
+
+        .toast.success { border-left-color: var(--green-500); }
+        .toast.error { border-left-color: var(--red-500); }
+        .toast.warning { border-left-color: var(--orange-500); }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .toast-icon { font-size: 1.2em; }
+        .toast-content { flex: 1; }
+        .toast-title { font-weight: 600; font-size: 0.9em; }
+        .toast-message { font-size: 0.85em; color: var(--gray-600); }
+        .toast-close { background: none; border: none; color: var(--gray-400); cursor: pointer; padding: 4px; }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .chat-container { grid-template-columns: 260px 1fr; }
+            .ai-panel { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .chat-container { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .connection-card { padding: 32px 24px; margin: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- ============ CONNECTION SCREEN ============ -->
+        <div id="connection-screen" class="screen">
+            <div class="connection-card">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-tooth"></i>
+                    </div>
+                    <h1>DentalAI Bridge</h1>
+                    <p class="tagline">Smart Communication for Dental Labs</p>
+                </div>
+                
+                <div class="connection-form">
+                    <div class="form-group">
+                        <label>I am a</label>
+                        <div class="role-selector">
+                            <button class="role-btn active" data-role="dentist">
+                                <i class="fas fa-user-md"></i>
+                                <span>Dentist</span>
+                                <small>Sending instructions</small>
+                            </button>
+                            <button class="role-btn" data-role="technician">
+                                <i class="fas fa-cogs"></i>
+                                <span>Technician</span>
+                                <small>Receiving instructions</small>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userName">Your Name</label>
+                        <input type="text" id="userName" placeholder="Enter your name" value="Dr. Smith">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="labName">Lab/Practice Name</label>
+                        <input type="text" id="labName" placeholder="Enter lab name" value="Precision Dental Studio">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="caseId">Case Reference ID</label>
+                        <input type="text" id="caseId" placeholder="Enter case number from your system">
+                        <small>Reference from your case management software</small>
+                    </div>
+                    
+                    <button id="connectBtn" class="connect-btn">
+                        <i class="fas fa-plug"></i> Connect to Lab
+                    </button>
+                </div>
+                
+                <div class="features-list">
+                    <div class="feature-item"><i class="fas fa-bolt"></i> Instant AI Translation</div>
+                    <div class="feature-item"><i class="fas fa-shield-alt"></i> Secure Communication</div>
+                    <div class="feature-item"><i class="fas fa-history"></i> Case History</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ CHAT SCREEN ============ -->
+        <div id="chat-screen" class="screen hidden">
+            <div class="chat-container">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <div class="sidebar-header">
+                        <div class="logo-small">
+                            <i class="fas fa-tooth"></i>
+                            <span>DentalAI Bridge</span>
+                        </div>
+                        <button id="newCaseBtn" class="new-case-btn" title="New Case">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="sidebar-content">
+                        <div class="section-label">CURRENT CASE</div>
+                        <div class="current-case-info">
+                            <div class="case-id-badge" id="sidebarCaseId">No case selected</div>
+                            <button id="copyCaseId" class="icon-btn" title="Copy Case ID">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="section-label">ONLINE USERS</div>
+                        <div id="onlineUsersList" class="online-users">
+                            <div class="user-item">
+                                <div class="user-dot online"></div>
+                                <span>Waiting for connection...</span>
+                            </div>
+                        </div>
+
+                        <div class="section-label">QUICK ACTIONS</div>
+                        <div class="quick-actions">
+                            <button id="clearChatBtn" class="action-btn">
+                                <i class="fas fa-eraser"></i> Clear Chat
+                            </button>
+                            <button id="exportChatBtn" class="action-btn">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+
+                        <div class="ai-status" id="aiStatus">
+                            <div class="status-dot"></div>
+                            <span>AI Ready</span>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Main Chat -->
+                <main class="chat-main">
+                    <div class="chat-header">
+                        <div class="header-info">
+                            <h2 id="chatTitle">Dental Lab Communication</h2>
+                            <p id="chatSubtitle">Connected to Precision Dental Studio</p>
+                        </div>
+                        <div id="typingIndicator" class="typing-indicator hidden">
+                            <div class="typing-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <span id="typingUserName"></span> is typing
+                        </div>
+                    </div>
+
+                    <div class="messages-container" id="messagesContainer">
+                        <!-- Welcome Message -->
+                        <div class="message system-message">
+                            <div class="message-content">
+                                <div class="system-icon"><i class="fas fa-robot"></i></div>
+                                <h3>Welcome to DentalAI Bridge</h3>
+                                <p>This AI-powered chat translates dentist instructions into clear technical specifications for lab technicians.</p>
+                                <div class="quick-start">
+                                    <p><strong>For Dentists:</strong> Type your instructions naturally:</p>
+                                    <code>Crown #30, full zirconia, shade A2, shoulder margin, light contacts</code>
+                                    <p><strong>For Technicians:</strong> You'll receive AI-structured technical notes automatically.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technician Actions -->
+                    <div id="technicianActions" class="technician-actions hidden">
+                        <div class="action-bar">
+                            <span class="action-label">Quick Actions:</span>
+                            <button class="quick-action-btn" data-action="question">
+                                <i class="fas fa-question-circle"></i> Ask Question
+                            </button>
+                            <button class="quick-action-btn" data-action="issue">
+                                <i class="fas fa-exclamation-triangle"></i> Report Issue
+                            </button>
+                            <button class="quick-action-btn" data-action="update">
+                                <i class="fas fa-info-circle"></i> Send Update
+                            </button>
+                            <button class="quick-action-btn" data-action="complete">
+                                <i class="fas fa-check-circle"></i> Mark Complete
+                            </button>
+                        </div>
+                        <div class="status-update-bar">
+                            <span class="action-label">Status:</span>
+                            <select id="caseStatusSelect">
+                                <option value="">Update Status...</option>
+                                <option value="received">📥 Received</option>
+                                <option value="in_progress">🔧 In Progress</option>
+                                <option value="design">✏️ Design Phase</option>
+                                <option value="milling">⚙️ Milling</option>
+                                <option value="finishing">✨ Finishing</option>
+                                <option value="qc">🔍 Quality Check</option>
+                                <option value="ready">✅ Ready for Delivery</option>
+                                <option value="shipped">🚚 Shipped</option>
+                                <option value="on_hold">⏸️ On Hold</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <div class="ai-processing-indicator hidden" id="aiProcessingIndicator">
+                            <div class="processing-dot"></div>
+                            <span>AI is processing...</span>
+                        </div>
+                        <div class="input-box">
+                            <textarea 
+                                id="messageInput" 
+                                placeholder="Type your instructions here..."
+                                rows="1"
+                            ></textarea>
+                            <button id="sendBtn" class="send-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="input-hints">
+                            <span>Press Enter to send, Shift+Enter for new line</span>
+                            <span class="char-count"><span id="charCount">0</span>/500</span>
+                        </div>
+                    </div>
+                </main>
+
+                <!-- AI Panel (Technician View) -->
+                <aside class="ai-panel" id="aiPanel" style="display: none;">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-brain"></i> AI Analysis</h3>
+                    </div>
+                    <div class="panel-content" id="aiPanelContent">
+                        <div class="ai-placeholder">
+                            <i class="fas fa-robot"></i>
+                            <p>AI technical specifications will appear here when a dentist sends instructions</p>
+                            <small>The AI translates natural language into structured lab notes</small>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <!-- Toast Container -->
+        <div id="toastContainer"></div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // ============================================
+        // DentalAI Bridge - Complete Application
+        // ============================================
+        class DentalAIBridge {
+            constructor() {
+                this.socket = null;
+                this.user = null;
+                this.currentCaseId = null;
+                this.isConnected = false;
+                this.init();
+            }
+
+            init() {
+                // Role selection buttons
+                document.querySelectorAll('.role-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                    });
+                });
+
+                // Connect button
+                document.getElementById('connectBtn').addEventListener('click', () => this.connect());
+
+                // Enter key on inputs
+                document.getElementById('caseId').addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') this.connect();
+                });
+            }
+
+            connect() {
+                const role = document.querySelector('.role-btn.active')?.dataset.role;
+                const name = document.getElementById('userName').value.trim();
+                const labName = document.getElementById('labName').value.trim();
+                const caseId = document.getElementById('caseId').value.trim();
+
+                if (!name) {
+                    this.showToast('error', 'Please enter your name');
+                    return;
+                }
+
+                this.user = { role, name, labName };
+                this.currentCaseId = caseId || `CASE-${Date.now()}`;
+
+                // Initialize Socket.IO
+                this.socket = io();
+
+                this.socket.on('connect', () => {
+                    this.socket.emit('register', {
+                        name,
+                        role,
+                        labId: 'main-lab',
+                        labName
+                    });
+                    this.isConnected = true;
+                    this.showChatScreen();
+                    this.bindSocketEvents();
+                    this.bindChatEvents();
+                    this.showToast('success', `Connected as ${role}`);
+                });
+
+                this.socket.on('connect_error', () => {
+                    this.showToast('error', 'Connection failed. Please check your server.');
+                });
+            }
+
+            showChatScreen() {
+                document.getElementById('connection-screen').classList.add('hidden');
+                document.getElementById('chat-screen').classList.remove('hidden');
+
+                document.getElementById('sidebarCaseId').textContent = this.currentCaseId;
+
+                const input = document.getElementById('messageInput');
+                if (this.user.role === 'dentist') {
+                    input.placeholder = 'Type your instructions naturally... (e.g., Crown #30, full zirconia, shade A2, shoulder margin)';
+                    document.getElementById('chatTitle').textContent = 'Sending Instructions';
+                } else {
+                    input.placeholder = 'Type notes, questions, or updates...';
+                    document.getElementById('chatTitle').textContent = 'Lab Communication';
+                    document.getElementById('technicianActions').classList.remove('hidden');
+                    document.getElementById('aiPanel').style.display = 'flex';
+                }
+
+                document.getElementById('chatSubtitle').textContent = `Connected to ${this.user.labName}`;
+            }
+
+            bindSocketEvents() {
+                if (!this.socket) return;
+
+                // Receive messages
+                this.socket.on('new-message', (message) => {
+                    this.displayMessage(message);
+                });
+
+                // AI Response
+                this.socket.on('ai-response', (aiMessage) => {
+                    this.displayAIMessage(aiMessage);
+                    this.updateAIPanel(aiMessage);
+                    document.getElementById('aiProcessingIndicator').classList.add('hidden');
+                });
+
+                // AI Processing indicator
+                this.socket.on('ai-processing', (data) => {
+                    if (data.status === 'analyzing' || data.status === 'translating') {
+                        document.getElementById('aiProcessingIndicator').classList.remove('hidden');
+                    } else {
+                        document.getElementById('aiProcessingIndicator').classList.add('hidden');
+                    }
+                });
+
+                // AI Error
+                this.socket.on('ai-error', (data) => {
+                    this.showToast('error', data.message || 'AI processing failed');
+                    document.getElementById('aiProcessingIndicator').classList.add('hidden');
+                });
+
+                // AI Confirmation
+                this.socket.on('ai-confirmation', (data) => {
+                    document.getElementById('aiProcessingIndicator').classList.add('hidden');
+                    this.showToast('success', data.message);
+                });
+
+                // Notifications
+                this.socket.on('notification', (notification) => {
+                    this.showToast(notification.type || 'info', notification.message, notification.title);
+                });
+
+                // Urgent notification
+                this.socket.on('urgent-notification', (notification) => {
+                    this.showToast('warning', notification.message, notification.title);
+                });
+
+                // Case status changed
+                this.socket.on('case-status-changed', (data) => {
+                    this.showToast('info', `Status: ${data.oldStatus} → ${data.newStatus}`, 'Case Updated');
+                    this.displayStatusChange(data);
+                });
+
+                // Online users
+                this.socket.on('online-users', (users) => {
+                    this.updateOnlineUsers(users);
+                });
+
+                // Typing indicator
+                this.socket.on('user-typing', (data) => {
+                    const indicator = document.getElementById('typingIndicator');
+                    if (data.isTyping && data.userId !== this.socket?.id) {
+                        document.getElementById('typingUserName').textContent = data.name;
+                        indicator.classList.remove('hidden');
+                    } else {
+                        indicator.classList.add('hidden');
+                    }
+                });
+
+                // Registered confirmation
+                this.socket.on('registered', (data) => {
+                    console.log('Registered:', data);
+                });
+
+                // Error handling
+                this.socket.on('error', (data) => {
+                    this.showToast('error', data.message);
+                });
+            }
+
+            bindChatEvents() {
+                const sendBtn = document.getElementById('sendBtn');
+                const messageInput = document.getElementById('messageInput');
+                const charCount = document.getElementById('charCount');
+
+                // Send button
+                sendBtn.addEventListener('click', () => this.sendMessage());
+
+                // Enter key to send
+                messageInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+
+                // Character count
+                messageInput.addEventListener('input', () => {
+                    const count = messageInput.value.length;
+                    charCount.textContent = count;
+                    if (count > 400) {
+                        charCount.style.color = 'var(--orange-500)';
+                    } else {
+                        charCount.style.color = '';
+                    }
+                });
+
+                // Typing indicator
+                let typingTimeout;
+                messageInput.addEventListener('input', () => {
+                    if (!this.socket) return;
+                    this.socket.emit('typing', { caseId: this.currentCaseId, isTyping: true });
+                    clearTimeout(typingTimeout);
+                    typingTimeout = setTimeout(() => {
+                        this.socket.emit('typing', { caseId: this.currentCaseId, isTyping: false });
+                    }, 1000);
+                });
+
+                // New case button
+                document.getElementById('newCaseBtn')?.addEventListener('click', () => {
+                    const newCaseId = prompt('Enter case reference ID:', `CASE-${Date.now()}`);
+                    if (newCaseId) {
+                        this.currentCaseId = newCaseId;
+                        document.getElementById('sidebarCaseId').textContent = newCaseId;
+                        document.getElementById('messagesContainer').innerHTML = '';
+                        this.showToast('info', `Switched to case ${newCaseId}`);
+                    }
+                });
+
+                // Copy case ID
+                document.getElementById('copyCaseId')?.addEventListener('click', () => {
+                    navigator.clipboard.writeText(this.currentCaseId).then(() => {
+                        this.showToast('success', 'Case ID copied!');
+                    });
+                });
+
+                // Clear chat
+                document.getElementById('clearChatBtn')?.addEventListener('click', () => {
+                    if (confirm('Clear current chat?')) {
+                        document.getElementById('messagesContainer').innerHTML = '';
+                        this.showToast('info', 'Chat cleared');
+                    }
+                });
+
+                // Export chat
+                document.getElementById('exportChatBtn')?.addEventListener('click', () => {
+                    this.exportChat();
+                });
+
+                // Technician quick action buttons
+                document.querySelectorAll('.quick-action-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const action = btn.dataset.action;
+                        const input = document.getElementById('messageInput');
+                        switch(action) {
+                            case 'question':
+                                input.value = 'Question: ';
+                                break;
+                            case 'issue':
+                                input.value = '⚠️ Issue: ';
+                                break;
+                            case 'update':
+                                input.value = 'Update: ';
+                                break;
+                            case 'complete':
+                                this.updateCaseStatus('ready');
+                                break;
+                        }
+                        input.focus();
+                    });
+                });
+
+                // Status change dropdown
+                document.getElementById('caseStatusSelect')?.addEventListener('change', (e) => {
+                    if (e.target.value) {
+                        this.updateCaseStatus(e.target.value);
+                    }
+                });
+            }
+
+            sendMessage() {
+                const input = document.getElementById('messageInput');
+                const message = input.value.trim();
+
+                if (!message || !this.socket || !this.isConnected) return;
+
+                if (this.user.role === 'dentist') {
+                    this.socket.emit('dentist-instruction', {
+                        caseId: this.currentCaseId,
+                        message: message
+                    });
+                } else {
+                    this.socket.emit('technician-note', {
+                        caseId: this.currentCaseId,
+                        message: message
+                    });
+                }
+
+                document.getElementById('aiProcessingIndicator').classList.remove('hidden');
+                input.value = '';
+                document.getElementById('charCount').textContent = '0';
+            }
+
+            updateCaseStatus(status) {
+                if (!this.socket) return;
+                this.socket.emit('case-status-update', {
+                    caseId: this.currentCaseId,
+                    status: status
+                });
+                this.showToast('info', `Status updated to: ${status}`);
+            }
+
+            // ============ DISPLAY METHODS ============
+            displayMessage(message) {
+                const container = document.getElementById('messagesContainer');
+                const div = document.createElement('div');
+
+                let messageClass = '';
+                if (message.type?.includes('dentist')) messageClass = 'dentist-message';
+                else if (message.type?.includes('technician')) messageClass = 'technician-message';
+
+                div.className = `message ${messageClass}`;
+                div.innerHTML = `
+                    <div class="message-content">
+                        <div class="message-sender">${this.escapeHtml(message.sender)} · ${message.senderRole || ''}</div>
+                        <div class="message-text">${this.escapeHtml(message.content)}</div>
+                        <div class="message-time">${this.formatTime(message.timestamp)}</div>
+                    </div>
+                `;
+                container.appendChild(div);
+                this.scrollToBottom();
+            }
+
+            displayAIMessage(aiMessage) {
+                const container = document.getElementById('messagesContainer');
+                const div = document.createElement('div');
+
+                const isForDentist = aiMessage.direction === 'tech-to-dentist';
+                const isUrgent = aiMessage.urgency === 'urgent' || aiMessage.urgency === 'critical';
+
+                div.className = `message ai-message ${isUrgent ? 'urgent' : ''}`;
+                div.innerHTML = `
+                    <div class="message-content">
+                        <div class="ai-header">
+                            <i class="fas fa-robot"></i> ${aiMessage.sender}
+                            ${isForDentist ? '<span class="badge badge-blue">For Dentist</span>' : ''}
+                            ${isUrgent ? '<span class="badge badge-red">Urgent</span>' : ''}
+                        </div>
+                        <div class="ai-content">${this.formatAIResponse(aiMessage.content)}</div>
+                        ${aiMessage.quickSummary ? `<div class="quick-summary"><i class="fas fa-bolt"></i> ${aiMessage.quickSummary}</div>` : ''}
+                        <div class="message-time">${this.formatTime(aiMessage.timestamp)}</div>
+                    </div>
+                `;
+                container.appendChild(div);
+
+                // Show suggested responses for dentist
+                if (aiMessage.suggestedResponses && this.user?.role === 'dentist') {
+                    this.showSuggestions(aiMessage.suggestedResponses);
+                }
+
+                this.scrollToBottom();
+            }
+
+            showSuggestions(suggestionsText) {
+                const container = document.getElementById('messagesContainer');
+                const suggestions = suggestionsText
+                    .split('\n')
+                    .filter(line => line.trim().length > 0)
+                    .map(line => line.replace(/^\d+\.\s*|•\s*|-\s*/, '').trim())
+                    .filter(s => s.length > 5);
+
+                if (suggestions.length === 0) return;
+
+                const div = document.createElement('div');
+                div.className = 'suggested-responses';
+                div.innerHTML = `
+                    <div class="suggestions-header">
+                        <i class="fas fa-lightbulb"></i> Quick Replies
+                    </div>
+                    <div class="suggestions-list">
+                        ${suggestions.map(s => `
+                            <button class="suggestion-btn" onclick="window.app.useSuggestion('${this.escapeHtml(s)}')">
+                                ${s}
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(div);
+                this.scrollToBottom();
+            }
+
+            useSuggestion(text) {
+                document.getElementById('messageInput').value = text;
+                document.getElementById('messageInput').focus();
+                document.querySelectorAll('.suggested-responses').forEach(el => el.remove());
+            }
+
+            displayStatusChange(data) {
+                const container = document.getElementById('messagesContainer');
+                const div = document.createElement('div');
+                div.className = 'message system-message';
+                div.innerHTML = `
+                    <div class="message-content status-change">
+                        <div class="status-icon"><i class="fas fa-sync-alt"></i></div>
+                        <div class="status-text">
+                            <strong>Status Updated</strong>
+                            <p>${data.oldStatus} → ${data.newStatus}</p>
+                            <small>by ${data.updatedBy}</small>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+                this.scrollToBottom();
+            }
+
+            updateAIPanel(aiMessage) {
+                const panel = document.getElementById('aiPanelContent');
+                if (!panel) return;
+                panel.innerHTML = `
+                    <div class="ai-analysis-card">
+                        <div class="card-header">
+                            <i class="fas fa-brain"></i> AI Technical Analysis
+                        </div>
+                        <div class="ai-analysis-content">${this.formatAIResponse(aiMessage.content)}</div>
+                        <div style="margin-top: 12px; font-size: 0.8em; color: var(--gray-500);">
+                            <i class="fas fa-clock"></i> ${this.formatTime(aiMessage.timestamp)}
+                        </div>
+                    </div>
+                `;
+            }
+
+            updateOnlineUsers(users) {
+                const container = document.getElementById('onlineUsersList');
+                if (!users || users.length === 0) {
+                    container.innerHTML = '<div class="user-item"><div class="user-dot"></div><span>No users online</span></div>';
+                    return;
+                }
+                container.innerHTML = users.map(u => `
+                    <div class="user-item">
+                        <div class="user-dot online"></div>
+                        <span><strong>${u.name}</strong> <small style="color: var(--gray-500); margin-left: 4px;">(${u.role})</small></span>
+                    </div>
+                `).join('');
+            }
+
+            // ============ UTILITY METHODS ============
+            exportChat() {
+                const messages = document.getElementById('messagesContainer').innerText;
+                const blob = new Blob([messages], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `dental-case-${this.currentCaseId}-${Date.now()}.txt`;
+                a.click();
+                URL.revokeObjectURL(url);
+                this.showToast('success', 'Chat exported successfully');
+            }
+
+            showToast(type, message, title = '') {
+                const container = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+
+                const icons = {
+                    success: 'fa-check-circle',
+                    error: 'fa-exclamation-circle',
+                    warning: 'fa-exclamation-triangle',
+                    info: 'fa-info-circle'
+                };
+
+                toast.innerHTML = `
+                    <i class="fas ${icons[type] || icons.info} toast-icon"></i>
+                    <div class="toast-content">
+                        ${title ? `<div class="toast-title">${title}</div>` : ''}
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    <button class="toast-close" onclick="this.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                container.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.style.animation = 'slideIn 0.3s ease reverse';
+                    setTimeout(() => toast.remove(), 300);
+                }, 5000);
+            }
+
+            formatAIResponse(text) {
+                return text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br>')
+                    .replace(/•/g, '<span style="color: #0d9488;">•</span>');
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            formatTime(timestamp) {
+                return new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            }
+
+            scrollToBottom() {
+                const container = document.getElementById('messagesContainer');
+                setTimeout(() => {
+                    container.scrollTop = container.scrollHeight;
+                }, 100);
+            }
+        }
+
+        // Initialize app when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            window.app = new DentalAIBridge();
+        });
+    </script>
+</body>
+</html>
