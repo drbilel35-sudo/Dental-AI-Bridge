@@ -58,7 +58,7 @@ const upload = multer({
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // Gemini 2.5 models support native file upload
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 // Note: gemini-2.5-flash supports both text and image input natively
 
 // ========== SYSTEM PROMPT ==========
