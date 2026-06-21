@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>AURA Lab | 24/7 Dental AI Assistant</title>
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #f0f4f8 0%, #e2e8f0 100%);
+      margin: 0;
+      min-height: 100vh;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 20px 35px -8px rgba(2, 132, 199, 0.12);
+      border-radius: 2rem;
+    }
+    .aura-gradient {
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    }
+    .status-pulse {
+      animation: softPulse 2s infinite;
+    }
+    @keyframes softPulse {
+      0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4); }
+      70% { box-shadow: 0 0 0 12px rgba(14, 165, 233, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
+    }
+    .slide-in {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .custom-scroll::-webkit-scrollbar { width: 5px; }
+    .custom-scroll::-webkit-scrollbar-track { background: #e9eef2; border-radius: 10px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
+    .tab-active {
+      background: white;
+      color: #0284c7;
+      font-weight: 600;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+    }
+    .ai-typing span {
+      animation: blink 1.4s infinite both;
+      background-color: #0ea5e9;
+      border-radius: 50%;
+      display: inline-block;
+      height: 6px;
+      width: 6px;
+      margin: 0 2px;
+    }
+    .ai-typing span:nth-child(2) { animation-delay: 0.2s; }
+    .ai-typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink {
+      0% { opacity: 0.2; }
+      20% { opacity: 1; }
+      100% { opacity: 0.2; }
+    }
+  </style>
+</head>
+<body class="p-4 md:p-6 flex justify-center items-start min-h-screen">
+
+  <div class="w-full max-w-7xl mx-auto">
+    
+    <!-- HEADER: AURA brand + UAE market -->
+    <div class="flex flex-wrap items-center justify-between mb-6 gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200">
+          <i class="fas fa-tooth text-white text-2xl"></i>
+        </div>
+        <div>
+          <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-700 to-blue-700 bg-clip-text text-transparent">AURA<span class="text-blue-600">Lab</span></h1>
+          <p class="text-xs text-slate-500 font-medium tracking-wide">24/7 INTELLIGENT DENTAL BRIDGE · UAE</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 bg-white/80 backdrop-blur px-4 py-2 rounded-full shadow-sm">
+        <span class="h-2.5 w-2.5 bg-emerald-500 rounded-full status-pulse"></span>
+        <span class="text-sm font-semibold text-slate-700">All channels online</span>
+        <span class="text-xs text-slate-400 ml-2">|</span>
+        <i class="fab fa-whatsapp text-green-600 text-lg"></i>
+        <i class="far fa-envelope text-blue-600 text-lg"></i>
+        <i class="fas fa-scanner text-purple-600 text-lg"></i>
+      </div>
+    </div>
+
+    <!-- MAIN DASHBOARD GRID -->
+    <div class="grid lg:grid-cols-3 gap-6">
+      
+      <!-- LEFT SECTION: Case workflow & AI communication (span 2) -->
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- Real-time case tracker board -->
+        <div class="glass-card p-5 slide-in">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+              <i class="fas fa-clipboard-list text-cyan-600"></i>Live Case Workflow
+            </h2>
+            <div class="flex gap-2 text-xs font-medium">
+              <span class="px-3 py-1.5 bg-white rounded-full shadow-sm text-cyan-700 cursor-pointer">All</span>
+              <span class="px-3 py-1.5 bg-gray-100 rounded-full text-gray-500 cursor-pointer">Crown</span>
+              <span class="px-3 py-1.5 bg-gray-100 rounded-full text-gray-500 cursor-pointer">Bridge</span>
+              <span class="px-3 py-1.5 bg-gray-100 rounded-full text-gray-500 cursor-pointer">Implant</span>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+            <div class="bg-gradient-to-b from-amber-50 to-white p-3 rounded-xl border border-amber-200">
+              <div class="flex justify-between mb-2"><span class="font-bold text-slate-700">Received</span><span class="bg-amber-100 text-amber-800 px-2 rounded-full text-xs">4</span></div>
+              <div class="space-y-2">
+                <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-amber-500 text-xs"><p class="font-bold">#D2421</p><p class="text-slate-500">Dr. Fatima · Crown 11</p><span class="text-emerald-600">scan+rx ok</span></div>
+                <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-amber-500 text-xs"><p class="font-bold">#D2425</p><p class="text-slate-500">Dr. Omar · Bridge</p><span class="text-red-500">missing shade</span></div>
+              </div>
+            </div>
+            <div class="bg-gradient-to-b from-blue-50 to-white p-3 rounded-xl border border-blue-200">
+              <div class="flex justify-between mb-2"><span class="font-bold text-slate-700">Design</span><span class="bg-blue-100 text-blue-800 px-2 rounded-full text-xs">5</span></div>
+              <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-blue-500 text-xs"><p class="font-bold">#D2418</p><p class="text-slate-500">CAD: Sara</p></div>
+            </div>
+            <div class="bg-gradient-to-b from-purple-50 to-white p-3 rounded-xl border border-purple-200">
+              <div class="flex justify-between mb-2"><span class="font-bold text-slate-700">Mfg/QC</span><span class="bg-purple-100 text-purple-800 px-2 rounded-full text-xs">7</span></div>
+              <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-purple-500 text-xs"><p class="font-bold">#D2401</p><p class="text-slate-500">Zirconia milling</p></div>
+            </div>
+            <div class="bg-gradient-to-b from-emerald-50 to-white p-3 rounded-xl border border-emerald-200">
+              <div class="flex justify-between mb-2"><span class="font-bold text-slate-700">Dispatch</span><span class="bg-emerald-100 text-emerald-800 px-2 rounded-full text-xs">3</span></div>
+              <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-emerald-500 text-xs"><p class="font-bold">#D2392</p><p class="text-slate-500">Aramex · today</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI communication hub: dentist instructions translated -->
+        <div class="glass-card p-5">
+          <div class="flex items-center gap-2 mb-3">
+            <i class="fas fa-robot text-cyan-600 text-xl"></i>
+            <h3 class="font-bold text-slate-800 text-lg">AURA AI Communication</h3>
+            <span class="text-xs bg-cyan-100 text-cyan-700 px-2 py-0.5 rounded-full ml-auto">auto-translate</span>
+          </div>
+          <div class="space-y-3 max-h-64 overflow-y-auto custom-scroll pr-1">
+            <div class="flex gap-3 border-b pb-3">
+              <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-700"><i class="fab fa-whatsapp"></i></div>
+              <div>
+                <p class="text-xs font-semibold">Dr. Alia <span class="text-slate-400 font-normal ml-2">just now</span></p>
+                <p class="text-sm text-slate-700">"Need full contour zirconia, shade A2, copy margin design from case #D2210."</p>
+                <span class="text-xs text-cyan-700 bg-cyan-50 px-2 py-0.5 rounded mt-1 inline-block">AI note: Zr full contour A2, copy margin #D2210 → sent to CAD</span>
+              </div>
+            </div>
+            <div class="flex gap-3 border-b pb-3">
+              <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-700"><i class="far fa-envelope"></i></div>
+              <div>
+                <p class="text-xs font-semibold">Dr. Rashid <span class="text-slate-400 ml-2">10 min ago</span></p>
+                <p class="text-sm text-slate-700">"Please rush case #D2421, patient traveling Saturday."</p>
+                <span class="text-xs text-amber-700 bg-amber-50 px-2 py-0.5 rounded mt-1 inline-block">Priority flag · notified production</span>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-purple-700"><i class="fas fa-scanner"></i></div>
+              <div>
+                <p class="text-xs font-semibold">3Shape auto-detect <span class="text-slate-400 ml-2">25 min ago</span></p>
+                <p class="text-sm text-slate-700">New scan: Dr. Hassan, implant case #D2428.</p>
+                <span class="text-xs text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded mt-1 inline-block">prescription extracted · technician notified</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SECTION: AURA assistant panel & integrations -->
+      <div class="space-y-5">
+        
+        <!-- Intelligent AURA card -->
+        <div class="aura-gradient text-white rounded-3xl p-5 shadow-xl shadow-blue-200">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-bold text-xl flex items-center gap-2"><i class="fas fa-brain"></i> AURA Assistant</h3>
+            <span class="bg-white/20 text-xs px-3 py-1 rounded-full">v2.4 UAE</span>
+          </div>
+          <p class="text-sm text-blue-50 mb-4">I bridge dentists and technicians 24/7. I translate instructions, track cases, and send updates.</p>
+          <div class="bg-white/10 rounded-xl p-3 mb-3 backdrop-blur-sm">
+            <div class="flex items-center text-xs font-medium text-blue-200 mb-1"><i class="fas fa-check-circle text-emerald-300 mr-1"></i> Last action</div>
+            <p class="text-sm">✅ Detected new IOS scan #D2428 · Generated technician note "PFM bridge 14-16".</p>
+          </div>
+          <div class="bg-white/10 rounded-xl p-3">
+            <div class="flex items-center text-xs font-medium text-blue-200 mb-1"><i class="fas fa-bell mr-1"></i> Notifications</div>
+            <ul class="text-sm space-y-1 list-disc list-inside text-blue-50">
+              <li>Missing info request → Dr. Omar</li>
+              <li>Shipment #D2392 out for delivery</li>
+              <li>WhatsApp message from clinic</li>
+            </ul>
+          </div>
+          <button class="mt-4 w-full bg-white text-cyan-700 font-semibold py-2.5 rounded-xl hover:bg-blue-50 transition flex items-center justify-center gap-2" onclick="alert('AURA: How can I assist with a case?')">
+            <i class="fas fa-comment-medical"></i> Ask AURA about case
+          </button>
+        </div>
+
+        <!-- Connected channels & multi-user -->
+        <div class="glass-card p-5">
+          <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2"><i class="fas fa-plug text-cyan-600"></i>Integrated Channels</h4>
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div class="flex items-center gap-2 bg-gray-50 p-2.5 rounded-xl"><i class="fab fa-whatsapp text-green-600 text-lg"></i><div><span class="font-semibold">WhatsApp</span><span class="block text-emerald-600">+971 50 123 4567</span></div></div>
+            <div class="flex items-center gap-2 bg-gray-50 p-2.5 rounded-xl"><i class="far fa-envelope text-blue-600 text-lg"></i><div><span class="font-semibold">Email</span><span class="block text-slate-500">lab@auralab.ae</span></div></div>
+            <div class="flex items-center gap-2 bg-gray-50 p-2.5 rounded-xl"><i class="fas fa-cloud-upload-alt text-purple-600 text-lg"></i><div><span class="font-semibold">3Shape</span><span class="block text-emerald-600">connected</span></div></div>
+            <div class="flex items-center gap-2 bg-gray-50 p-2.5 rounded-xl"><i class="fas fa-database text-orange-600 text-lg"></i><div><span class="font-semibold">CRM</span><span class="block text-slate-500">synced</span></div></div>
+          </div>
+        </div>
+
+        <!-- Multi-user departments -->
+        <div class="glass-card p-4">
+          <p class="font-semibold text-slate-700 mb-2 text-sm">Active team</p>
+          <div class="flex -space-x-2 mb-2">
+            <div class="w-9 h-9 rounded-full bg-amber-200 border-2 border-white flex items-center justify-center font-bold text-amber-800 text-xs">CS</div>
+            <div class="w-9 h-9 rounded-full bg-blue-200 border-2 border-white flex items-center justify-center font-bold text-blue-800 text-xs">CAD</div>
+            <div class="w-9 h-9 rounded-full bg-emerald-200 border-2 border-white flex items-center justify-center font-bold text-emerald-800 text-xs">QC</div>
+            <div class="w-9 h-9 rounded-full bg-purple-200 border-2 border-white flex items-center justify-center font-bold text-purple-800 text-xs">MGR</div>
+          </div>
+          <p class="text-xs text-slate-500">Customer service, 2 technicians, admin online</p>
+        </div>
+
+        <!-- Quick shipment & approvals -->
+        <div class="glass-card p-4">
+          <div class="flex justify-between mb-2"><span class="font-bold text-slate-700 text-sm"><i class="fas fa-paper-plane text-cyan-600 mr-1"></i>Pending dispatch</span><span class="text-xs bg-cyan-100 text-cyan-700 px-2 rounded-full">3 ready</span></div>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between"><span>#D2381 Dr. Layla</span><span class="text-emerald-600">QC passed</span></div>
+            <div class="flex justify-between"><span>#D2390 Dr. Rashid</span><span class="text-amber-600">awaiting approval</span></div>
+          </div>
+          <button class="mt-3 w-full border border-cyan-300 text-cyan-700 py-2 rounded-lg text-sm hover:bg-cyan-50 transition">Scan to dispatch</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER: UAE market ready -->
+    <div class="mt-8 text-center text-xs text-slate-500 border-t pt-5 flex flex-col sm:flex-row justify-between">
+      <p>© 2025 AURA Lab by Dental AI Solutions · UAE Healthcare Market</p>
+      <p class="flex gap-3 mt-1 sm:mt-0">
+        <span><i class="fas fa-shield-alt text-cyan-600"></i> HIPAA ready</span>
+        <span><i class="fas fa-clock text-cyan-600"></i> 24/7 operation</span>
+        <span><i class="fas fa-language text-cyan-600"></i> Arabic/English</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- Small interactive script for demo feeling -->
+  <script>
+    (function() {
+      console.log('AURA Lab AI initialized – UAE dental laboratory platform.');
+      // Simulate live interaction for demo purposes
+      document.querySelectorAll('button').forEach(btn => {
+        if (!btn.hasAttribute('onclick')) {
+          btn.addEventListener('click', (e) => {
+            if (e.target.closest('button')) {
+              alert('AURA Lab demo: In production, this triggers AI workflow, WhatsApp integration, or case update.');
+            }
+          });
+        }
+      });
+      // Update status heartbeat (visual only)
+      setInterval(() => {
+        const dot = document.querySelector('.status-pulse');
+        if (dot) dot.classList.toggle('opacity-60');
+      }, 1800);
+    })();
+  </script>
+</body>
+</html>
