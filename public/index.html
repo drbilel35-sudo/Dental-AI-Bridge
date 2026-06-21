@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>DentLab AI | 24/7 Lab Assistant</title>
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dental: {
+              50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd', 300: '#7dd3fc', 400: '#38bdf8',
+              500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e',
+              accent: '#0891b2', surface: '#f8fafc', clean: '#ffffff',
+            },
+            tooth: '#f8fafc',
+            gum: '#f43f5e'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            'dental': '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02)',
+            'card': '0 4px 12px rgba(2, 132, 199, 0.08)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: #f1f5f9;
+      font-family: 'Inter', sans-serif;
+    }
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 25px -5px rgba(2, 132, 199, 0.1), 0 8px 10px -6px rgba(2, 132, 199, 0.1);
+      transition: all 0.2s ease;
+    }
+    .status-badge {
+      @apply px-3 py-1 rounded-full text-xs font-semibold tracking-wide;
+    }
+    .gradient-dental {
+      background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+    }
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 10px; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
+    .pulse-dot {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(14, 165, 233, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
+    }
+  </style>
+</head>
+<body class="antialiased text-slate-700">
+
+<!-- Main App Container: mimics a professional dental AI dashboard -->
+<div class="min-h-screen flex flex-col max-w-7xl mx-auto p-4 md:p-6 lg:p-8">
+  
+  <!-- Header with brand and integration status -->
+  <header class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 bg-dental-600 rounded-xl flex items-center justify-center shadow-lg">
+        <i class="fas fa-tooth text-white text-xl"></i>
+      </div>
+      <div>
+        <h1 class="text-2xl md:text-3xl font-bold text-dental-800 tracking-tight">DentLab<span class="text-dental-500">AI</span></h1>
+        <p class="text-xs text-slate-500 font-medium">24/7 Intelligent Lab Assistant · UAE</p>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <span class="bg-emerald-100 text-emerald-700 text-xs px-3 py-1.5 rounded-full flex items-center gap-2 font-medium">
+        <span class="h-2 w-2 bg-emerald-500 rounded-full pulse-dot"></span> All channels online
+      </span>
+      <div class="flex space-x-1 bg-white rounded-lg p-1 shadow-sm border border-gray-200">
+        <span class="px-3 py-1 text-xs bg-dental-500 text-white rounded-md font-semibold"><i class="fab fa-whatsapp mr-1"></i> WhatsApp</span>
+        <span class="px-3 py-1 text-xs text-slate-500 font-medium"><i class="far fa-envelope mr-1"></i> Email</span>
+        <span class="px-3 py-1 text-xs text-slate-500 font-medium"><i class="fas fa-scanner mr-1"></i> IOS scans</span>
+      </div>
+      <div class="text-sm text-slate-600 bg-white px-3 py-1.5 rounded-lg shadow-sm">
+        <i class="far fa-building text-dental-500 mr-1"></i> UAE Lab · 3 departments
+      </div>
+    </div>
+  </header>
+
+  <!-- Stats overview: Quick metrics for lab performance -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white p-4 rounded-2xl shadow-dental flex items-center justify-between">
+      <div>
+        <p class="text-xs text-slate-500 font-medium">Active Cases</p>
+        <p class="text-2xl font-bold text-dental-700">24</p>
+        <p class="text-xs text-emerald-600">+5 today</p>
+      </div>
+      <div class="w-10 h-10 bg-cyan-50 rounded-full flex items-center justify-center text-dental-600"><i class="fas fa-clock text-lg"></i></div>
+    </div>
+    <div class="bg-white p-4 rounded-2xl shadow-dental flex items-center justify-between">
+      <div>
+        <p class="text-xs text-slate-500 font-medium">New Scans</p>
+        <p class="text-2xl font-bold text-dental-700">8</p>
+        <p class="text-xs text-amber-600">3 awaiting prescription</p>
+      </div>
+      <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-dental-600"><i class="fas fa-cube text-lg"></i></div>
+    </div>
+    <div class="bg-white p-4 rounded-2xl shadow-dental flex items-center justify-between">
+      <div>
+        <p class="text-xs text-slate-500 font-medium">Today Dispatch</p>
+        <p class="text-2xl font-bold text-dental-700">11</p>
+        <p class="text-xs text-emerald-600">On schedule</p>
+      </div>
+      <div class="w-10 h-10 bg-teal-50 rounded-full flex items-center justify-center text-dental-600"><i class="fas fa-truck text-lg"></i></div>
+    </div>
+    <div class="bg-white p-4 rounded-2xl shadow-dental flex items-center justify-between">
+      <div>
+        <p class="text-xs text-slate-500 font-medium">Messages Today</p>
+        <p class="text-2xl font-bold text-dental-700">47</p>
+        <p class="text-xs text-slate-500">Dentists & techs</p>
+      </div>
+      <div class="w-10 h-10 bg-indigo-50 rounded-full flex items-center justify-center text-dental-600"><i class="fas fa-comment-dots text-lg"></i></div>
+    </div>
+  </div>
+
+  <!-- Main two column layout: Case workflow + AI assistant panel -->
+  <div class="grid lg:grid-cols-3 gap-6 flex-1">
+    
+    <!-- LEFT COLUMN: Workflow & Cases (2/3 on large) -->
+    <div class="lg:col-span-2 space-y-6">
+      
+      <!-- Case tracking board -->
+      <div class="bg-white rounded-2xl shadow-dental p-5">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-bold text-slate-800"><i class="fas fa-list-check text-dental-500 mr-2"></i>Live Case Workflow</h2>
+          <div class="flex space-x-2 text-xs">
+            <span class="bg-dental-100 text-dental-700 px-3 py-1 rounded-full cursor-pointer font-medium">All</span>
+            <span class="bg-gray-100 text-gray-500 px-3 py-1 rounded-full cursor-pointer">Crown</span>
+            <span class="bg-gray-100 text-gray-500 px-3 py-1 rounded-full cursor-pointer">Bridge</span>
+            <span class="bg-gray-100 text-gray-500 px-3 py-1 rounded-full cursor-pointer">Implant</span>
+          </div>
+        </div>
+        
+        <!-- Kanban style stages -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-semibold text-slate-700">Received</span>
+              <span class="bg-slate-200 text-slate-600 w-5 h-5 rounded-full text-xs flex items-center justify-center">3</span>
+            </div>
+            <div class="space-y-2">
+              <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-amber-400 text-xs">
+                <p class="font-bold">#D2412</p>
+                <p class="text-slate-500">Dr. Fatima · Crown 11</p>
+                <span class="text-amber-600 text-xs">scan + rx received</span>
+              </div>
+              <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-amber-400 text-xs">
+                <p class="font-bold">#D2415</p>
+                <p class="text-slate-500">Dr. Ahmed · Bridge 24-26</p>
+                <span class="text-red-500 text-xs">missing photo</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-semibold text-slate-700">Design</span>
+              <span class="bg-blue-100 text-blue-700 w-5 h-5 rounded-full text-xs flex items-center justify-center">5</span>
+            </div>
+            <div class="space-y-2">
+              <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-blue-400 text-xs">
+                <p class="font-bold">#D2408</p>
+                <p class="text-slate-500">CAD technician: Omar</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-semibold text-slate-700">Mfg/QC</span>
+              <span class="bg-purple-100 text-purple-700 w-5 h-5 rounded-full text-xs flex items-center justify-center">7</span>
+            </div>
+            <div class="space-y-2">
+              <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-purple-400 text-xs">
+                <p class="font-bold">#D2399</p>
+                <p class="text-slate-500">Zirconia milling</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-semibold text-slate-700">Dispatch</span>
+              <span class="bg-emerald-100 text-emerald-700 w-5 h-5 rounded-full text-xs flex items-center justify-center">4</span>
+            </div>
+            <div class="space-y-2">
+              <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-emerald-400 text-xs">
+                <p class="font-bold">#D2387</p>
+                <p class="text-slate-500">Courier: Aramex</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent AI translated notes & communication log -->
+      <div class="bg-white rounded-2xl shadow-dental p-5">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-bold text-slate-800"><i class="fas fa-robot text-dental-500 mr-2"></i>AI Communication Hub</h3>
+          <span class="text-xs text-dental-600 bg-dental-50 px-3 py-1 rounded-full">auto-translated notes</span>
+        </div>
+        <div class="space-y-3 max-h-60 overflow-y-auto scrollbar-thin pr-1">
+          <div class="flex gap-3 items-start border-b pb-3">
+            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 text-sm"><i class="fab fa-whatsapp"></i></div>
+            <div>
+              <p class="text-xs font-semibold">Dr. Sarah Al Mazrouei <span class="text-slate-400 font-normal ml-2">2 min ago</span></p>
+              <p class="text-sm text-slate-600">"Need full contour zirconia, shade A2, margin design as per previous case."</p>
+              <span class="text-xs text-dental-600 bg-dental-50 px-2 py-0.5 rounded">AI: translated to technician note → "Zr full contour, A2, copy margin #D2210"</span>
+            </div>
+          </div>
+          <div class="flex gap-3 items-start border-b pb-3">
+            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-sm"><i class="far fa-envelope"></i></div>
+            <div>
+              <p class="text-xs font-semibold">Dr. Khamis <span class="text-slate-400 font-normal ml-2">25 min ago</span></p>
+              <p class="text-sm text-slate-600">"Please rush case #D2412, patient traveling."</p>
+              <span class="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded">Priority flag added · notified CAD team</span>
+            </div>
+          </div>
+          <div class="flex gap-3 items-start">
+            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 text-sm"><i class="fas fa-scanner"></i></div>
+            <div>
+              <p class="text-xs font-semibold">3Shape Auto-detect <span class="text-slate-400 font-normal ml-2">1 hour ago</span></p>
+              <p class="text-sm text-slate-600">New scan received: Dr. Hassan, implant case #D2418.</p>
+              <span class="text-xs text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">prescription extracted · technician notified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: AI assistant, notifications, quick actions (1/3) -->
+    <div class="space-y-5">
+      
+      <!-- AI Assistant Card: intelligent bridge -->
+      <div class="bg-gradient-to-br from-dental-700 to-dental-800 text-white rounded-2xl shadow-xl p-5">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-bold text-lg flex items-center gap-2"><i class="fas fa-brain"></i> DentLab AI</h3>
+          <span class="bg-white/20 text-xs px-3 py-1 rounded-full">v2.4 UAE</span>
+        </div>
+        <p class="text-sm text-blue-100 mb-4">I monitor scans, translate dentist instructions, and update case status automatically.</p>
+        
+        <!-- Simulated AI actions -->
+        <div class="space-y-3">
+          <div class="bg-white/10 rounded-xl p-3 backdrop-blur-sm">
+            <div class="flex items-center text-xs font-medium text-blue-200 mb-1"><i class="fas fa-check-circle text-emerald-300 mr-1"></i> Last action</div>
+            <p class="text-sm">✅ Detected new IOS scan for #D2420 · generated technician note "PFM bridge 14-16, subtractive design".</p>
+          </div>
+          <div class="bg-white/10 rounded-xl p-3">
+            <div class="flex items-center text-xs font-medium text-blue-200 mb-1"><i class="fas fa-bell mr-1"></i> Notifications</div>
+            <ul class="text-sm space-y-1 list-disc list-inside text-blue-50">
+              <li>Missing info request sent to Dr. Omar (case #D2415)</li>
+              <li>Shipment update: #D2387 out for delivery</li>
+              <li>New WhatsApp message from clinic</li>
+            </ul>
+          </div>
+        </div>
+        <button class="mt-4 w-full bg-white text-dental-700 font-semibold py-2.5 rounded-xl hover:bg-blue-50 transition flex items-center justify-center gap-2 text-sm">
+          <i class="fas fa-comment-medical"></i> Ask AI about a case
+        </button>
+      </div>
+
+      <!-- Real-time status and multi-channel integration -->
+      <div class="bg-white rounded-2xl shadow-dental p-5">
+        <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2"><i class="fas fa-plug text-dental-500"></i>Connected Channels</h4>
+        <div class="grid grid-cols-2 gap-3 text-xs">
+          <div class="flex items-center gap-2 bg-gray-50 p-2.5 rounded-lg">
+            <i class="fab fa-whatsapp text-green-600 text-lg"></i>
+            <div><span class="font-semibold block">WhatsApp</span><span class="text-emerald-600">+971 50 123 4567</span></div>
+          </div>
+          <div class="flex items-center gap-2 bg-gray-50 p-2.5 rounded-lg">
+            <i class="far fa-envelope text-blue-600 text-lg"></i>
+            <div><span class="font-semibold block">Email</span><span class="text-slate-500">lab@dentlab.ae</span></div>
+          </div>
+          <div class="flex items-center gap-2 bg-gray-50 p-2.5 rounded-lg">
+            <i class="fas fa-cloud-upload-alt text-purple-600 text-lg"></i>
+            <div><span class="font-semibold block">3Shape</span><span class="text-emerald-600">connected</span></div>
+          </div>
+          <div class="flex items-center gap-2 bg-gray-50 p-2.5 rounded-lg">
+            <i class="fas fa-database text-orange-600 text-lg"></i>
+            <div><span class="font-semibold block">CRM</span><span class="text-slate-500">synced</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming dispatches & approvals -->
+      <div class="bg-white rounded-2xl shadow-dental p-5">
+        <div class="flex justify-between items-center mb-3">
+          <h4 class="font-bold text-slate-800"><i class="fas fa-paper-plane text-dental-500 mr-1"></i>Pending Shipments</h4>
+          <span class="text-xs bg-dental-100 text-dental-700 px-2 py-0.5 rounded-full">4 ready</span>
+        </div>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between items-center"><span>#D2381 · Dr. Layla</span><span class="text-emerald-600 font-medium">QC passed</span></div>
+          <div class="flex justify-between items-center"><span>#D2390 · Dr. Rashid</span><span class="text-amber-600 font-medium">awaiting approval</span></div>
+          <div class="flex justify-between items-center"><span>#D2402 · Dr. Noor</span><span class="text-slate-400">packing</span></div>
+        </div>
+        <button class="mt-3 w-full border border-dental-300 text-dental-700 py-2 rounded-lg text-sm font-medium hover:bg-dental-50 transition">
+          <i class="fas fa-qrcode mr-1"></i> Scan to dispatch
+        </button>
+      </div>
+      
+      <!-- Team presence (multi-user) -->
+      <div class="bg-white rounded-2xl shadow-dental p-4 text-xs">
+        <p class="font-semibold text-slate-700 mb-2">Active team members</p>
+        <div class="flex -space-x-2 mb-2">
+          <div class="w-8 h-8 rounded-full bg-amber-200 border-2 border-white flex items-center justify-center font-bold text-amber-800">CS</div>
+          <div class="w-8 h-8 rounded-full bg-blue-200 border-2 border-white flex items-center justify-center font-bold text-blue-800">CAD</div>
+          <div class="w-8 h-8 rounded-full bg-emerald-200 border-2 border-white flex items-center justify-center font-bold text-emerald-800">QC</div>
+          <div class="w-8 h-8 rounded-full bg-purple-200 border-2 border-white flex items-center justify-center font-bold text-purple-800">MGR</div>
+        </div>
+        <p class="text-slate-500">Customer service, 2 technicians, admin online</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer: scalable demo note -->
+  <div class="mt-8 text-center text-xs text-slate-400 border-t pt-4 flex flex-col sm:flex-row justify-between">
+    <p>© 2025 DentLab AI · UAE Healthcare Market · Demonstration for professional dental laboratories</p>
+    <p class="flex gap-3 mt-1 sm:mt-0">
+      <span><i class="fas fa-shield-alt text-dental-500"></i> HIPAA/GDPR ready</span>
+      <span><i class="fas fa-clock text-dental-500"></i> 24/7 operation</span>
+      <span><i class="fas fa-language text-dental-500"></i> Arabic/English support</span>
+    </p>
+  </div>
+</div>
+
+<!-- Small interactive script for demo feeling (non disruptive) -->
+<script>
+  (function() {
+    console.log('DentLab AI Assistant initialized – UAE dental laboratory platform.');
+    // Simulate auto-refresh feeling: update random timestamps (demo only)
+    const statusElements = document.querySelectorAll('.pulse-dot');
+    // No actual backend, but the interface represents fully functional concept.
+    // In production, WebSocket would push real-time updates from WhatsApp/email/scan APIs.
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('button')) {
+        alert('Demo interaction: In production, this triggers AI assistant workflow, WhatsApp integration, or case update.');
+      }
+    });
+    // Fake notification badge update for demo
+    const activeCasesSpan = document.querySelector('.bg-emerald-100 .pulse-dot');
+    if(activeCasesSpan) {
+      setInterval(() => {
+        activeCasesSpan.classList.toggle('opacity-50');
+      }, 1500);
+    }
+  })();
+</script>
+
+</body>
+</html>
